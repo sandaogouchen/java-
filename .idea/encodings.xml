@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/product.db" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/ascent/bean/Product.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/ascent/bean/User.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/ascent/ui/Ascentsys.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/ascent/ui/LoginFrame.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/ascent/ui/MainFrame.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/ascent/ui/ProductDetailsDialog.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/ascent/ui/ProductPanel.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/ascent/ui/RegistFrame.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/ascent/ui/ShoppingCartDialog.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/ascent/ui/ShoppingMessageDialog.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/ascent/util/DataAccessor.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/ascent/util/Handler.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/ascent/util/ProductDataAccessor.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/ascent/util/ProductDataClient.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/ascent/util/ProductDataServer.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/ascent/util/ProtocolPort.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/ascent/util/ShoppingCart.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/ascent/util/UserDataClient.java" charset="UTF-8" />
+    <file url="PROJECT" charset="GBK" />
+  </component>
+</project>

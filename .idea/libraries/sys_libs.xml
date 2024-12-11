@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="sys-libs">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/lib/sys-libs" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+    <jarDirectory url="file://$PROJECT_DIR$/lib/sys-libs" recursive="false" />
+  </library>
+</component>
