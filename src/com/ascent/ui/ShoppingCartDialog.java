@@ -80,8 +80,8 @@ public class ShoppingCartDialog extends JDialog {
 		c.anchor = GridBagConstraints.WEST;
 		c.insets = new Insets(10, 0, 2, 10);
 
-		shoppingCart = new ShoppingCart();
-		ArrayList<Product> shoppingList = shoppingCart.getShoppingList();
+		shoppingCart = ShoppingCart.getInstance();
+		ArrayList<Product> shoppingList = shoppingCart.getCartList();
 
 		JLabel pruductLabel;
 		Product product = null;
@@ -151,8 +151,8 @@ public class ShoppingCartDialog extends JDialog {
 	 */
 	class ClearButtonActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent event) {
-			ShoppingCart shopping = new ShoppingCart();
-			shopping.clearProduct();
+			ShoppingCart shopping = ShoppingCart.getInstance();
+			shopping.clearCart();
 			shoppingButton.setEnabled(false);
 			setVisible(false);
 		}

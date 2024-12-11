@@ -5,6 +5,9 @@ import javax.swing.event.*;
 
 import com.ascent.bean.Product;
 import com.ascent.util.ProductDataClient;
+import com.ascent.util.FavoritesManager;
+import com.ascent.util.ShoppingCart;
+import com.ascent.bean.User;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -38,6 +41,8 @@ public class ProductPanel extends JPanel {
 
 	protected JButton shoppingButton;
 
+	protected JButton favoriteButton;
+
 	protected JPanel bottomPanel;
 
 	protected MainFrame parentFrame;
@@ -45,6 +50,11 @@ public class ProductPanel extends JPanel {
 	protected ArrayList<Product> productArrayList;
 
 	protected ProductDataClient myDataClient;
+
+	// 新增的管理员功能按钮
+	protected JButton addProductButton;
+	protected JButton deleteProductButton;
+	protected JButton updateProductButton;
 
 	/**
 	 * 构建产品面板的构造方法
@@ -77,6 +87,12 @@ public class ProductPanel extends JPanel {
 			clearButton = new JButton("清空");
 			exitButton = new JButton("退出");
 			shoppingButton = new JButton("查看购物车");
+			favoriteButton = new JButton("添加到收藏夹");
+
+			// 初始化管理员功能按钮
+			addProductButton = new JButton("添加药品");
+			deleteProductButton = new JButton("删除药品");
+			updateProductButton = new JButton("修改药品");
 
 			bottomPanel = new JPanel();
 
@@ -92,8 +108,17 @@ public class ProductPanel extends JPanel {
 			bottomPanel.setLayout(new FlowLayout());
 			bottomPanel.add(shoppingButton);
 			bottomPanel.add(detailsButton);
+			bottomPanel.add(favoriteButton);
 			bottomPanel.add(clearButton);
 			bottomPanel.add(exitButton);
+
+			// 仅在用户为管理员时添加管理员功能按钮
+			User currentUser = parentFrame.getCurrentUser();
+			if (currentUser != null && currentUser.getAuthority() == 1) {
+				bottomPanel.add(addProductButton);
+				bottomPanel.add(deleteProductButton);
+				bottomPanel.add(updateProductButton);
+			}
 
 			this.add(BorderLayout.SOUTH, bottomPanel);
 
@@ -103,6 +128,12 @@ public class ProductPanel extends JPanel {
 			shoppingButton.addActionListener(new ShoppingActionListener());
 			categoryComboBox.addItemListener(new GoItemListener());
 			productListBox.addListSelectionListener(new ProductListSelectionListener());
+			favoriteButton.addActionListener(new FavoriteActionListener());
+
+			// 添加管理员功能按钮的事件监听器
+			addProductButton.addActionListener(new AddProductActionListener());
+			deleteProductButton.addActionListener(new DeleteProductActionListener());
+			updateProductButton.addActionListener(new UpdateProductActionListener());
 
 			detailsButton.setEnabled(false);
 			clearButton.setEnabled(false);
@@ -174,7 +205,8 @@ public class ProductPanel extends JPanel {
 	 */
 	class ExitActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent event) {
-			parentFrame.exit();
+			parentFrame.dispose();
+			System.exit(0);
 		}
 	}
 
@@ -213,6 +245,48 @@ public class ProductPanel extends JPanel {
 			} else {
 				detailsButton.setEnabled(true);
 			}
+		}
+	}
+
+	/**
+	 * 处理添加到收藏夹按钮时触发的事件监听器
+	 * @author ascent
+	 */
+	class FavoriteActionListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			Product selectedProduct = (Product) productListBox.getSelectedValue();
+			if (selectedProduct != null) {
+				FavoritesManager.getInstance().addProduct(selectedProduct);
+				JOptionPane.showMessageDialog(ProductPanel.this,
+					"已将 " + selectedProduct.getProductname() + " 添加到收藏夹",
+					"收藏夹",
+					JOptionPane.INFORMATION_MESSAGE);
+				parentFrame.favoritesPanel.refreshFavorites();
+			}
+		}
+	}
+
+	// 实现添加药品的事件监听器
+	class AddProductActionListener implements ActionListener {
+		public void actionPerformed(ActionEvent event) {
+			// 弹出对话框输入药品信息并保存
+			JOptionPane.showMessageDialog(ProductPanel.this, "添加药品功能待实现", "提示", JOptionPane.INFORMATION_MESSAGE);
+		}
+	}
+
+	// 实现删除药品的事件监听器
+	class DeleteProductActionListener implements ActionListener {
+		public void actionPerformed(ActionEvent event) {
+			// 从列表中选择药品并删除
+			JOptionPane.showMessageDialog(ProductPanel.this, "删除药品功能待实现", "提示", JOptionPane.INFORMATION_MESSAGE);
+		}
+	}
+
+	// 实现修改药品的事件监听器
+	class UpdateProductActionListener implements ActionListener {
+		public void actionPerformed(ActionEvent event) {
+			// 从列表中选择药品，弹出对话框修改信息并保存
+			JOptionPane.showMessageDialog(ProductPanel.this, "修改药品功能待实现", "提示", JOptionPane.INFORMATION_MESSAGE);
 		}
 	}
 }

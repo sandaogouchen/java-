@@ -12,6 +12,7 @@ import java.util.HashMap;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JScrollPane;
@@ -108,21 +109,26 @@ public class LoginFrame extends JFrame {
 
 		public void actionPerformed(ActionEvent e) {
 			boolean bo = false;
-			HashMap userTable = userDataClient.getUsers();
+			User userObject = null; 
+			HashMap<String, User> userTable = userDataClient.getUsers();
 			if (userTable != null) {
 				if (userTable.containsKey(userText.getText())) {
-					User userObject = (User) userTable.get(userText.getText());
+					userObject = userTable.get(userText.getText());
 					char[] chr = password.getPassword();
 					String pwd = new String(chr);
 					if (userObject.getPassword().equals(pwd)) {
 						bo = true;
+						// 检查用户是否为管理员
+						if (userObject.getAuthority() == 1) {
+							JOptionPane.showMessageDialog(null, "您是管理员用户", "管理员登录", JOptionPane.INFORMATION_MESSAGE);
+						}
 					}
 				}
 				if (bo) {
 					userDataClient.closeSocKet();
 					setVisible(false);
 					dispose();
-					MainFrame myFrame = new MainFrame();
+					MainFrame myFrame = new MainFrame(userObject); 
 					myFrame.setVisible(true);
 				} else {
 					tip.setText("帐号不存在,或密码错误.");

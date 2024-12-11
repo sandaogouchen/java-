@@ -163,9 +163,9 @@ public class ProductDetailsDialog extends JDialog {
 	 * 处理"购买"按钮的内部类
 	 */
 	class PurchaseButtonActionListener implements ActionListener {
-		ShoppingCart shoppingCar = new ShoppingCart();
+		ShoppingCart shoppingCart = ShoppingCart.getInstance();
 		public void actionPerformed(ActionEvent event) {
-			shoppingCar.addProduct(myProduct);
+			shoppingCart.addProduct(myProduct);
 			shoppingButton.setEnabled(true);
 			setVisible(false);
 		}

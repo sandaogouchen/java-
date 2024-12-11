@@ -80,52 +80,25 @@ public class UserDataClient implements ProtocolPort {
 	}
 
 	/**
-	 * 返回用户
-	 * @return userTable 
+	 * 获取用户数据
 	 */
-	@SuppressWarnings("unchecked")
-	public HashMap<String,User> getUsers() {
-		HashMap<String,User> userTable = new HashMap<>();
-		File dbFile = new File("user.db");
-		
-		log("尝试读取用户数据文件: " + dbFile.getAbsolutePath());
-		if (!dbFile.exists()) {
-			log("错误：文件不存在 - " + dbFile.getAbsolutePath());
-			return userTable;
-		}
-		
-		try (BufferedReader reader = new BufferedReader(new FileReader(dbFile))) {
+	public HashMap<String, User> getUsers() {
+		HashMap<String, User> userTable = new HashMap<>();
+		try (BufferedReader reader = new BufferedReader(new FileReader("user.db"))) {
 			String line;
 			while ((line = reader.readLine()) != null) {
-				if (line.trim().isEmpty()) continue;
-				
 				String[] parts = line.split(",");
 				if (parts.length >= 3) {
-					String username = parts[0].trim();
-					String password = parts[1].trim();
-					int authority = Integer.parseInt(parts[2].trim());
-					
-					User user = new User();
-					user.setUsername(username);
-					user.setPassword(password);
-					user.setAuthority(authority);
-					
+					String username = parts[0];
+					String password = parts[1];
+					int authority = Integer.parseInt(parts[2]);
+					User user = new User(username, password, authority);
 					userTable.put(username, user);
 				}
 			}
-			log("从本地文件成功读取用户数据");
-			
-		} catch (FileNotFoundException e) {
-			log("错误：找不到user.db文件 - " + e.getMessage());
-			e.printStackTrace();
 		} catch (IOException e) {
-			log("错误：读取文件时发生IO异常 - " + e.getMessage());
-			e.printStackTrace();
-		} catch (NumberFormatException e) {
-			log("错误：解析用户权限数据失败 - " + e.getMessage());
 			e.printStackTrace();
 		}
-		
 		return userTable;
 	}
 

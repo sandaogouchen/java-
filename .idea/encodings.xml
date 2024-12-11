@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/favorites.dat" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/favorites_null.dat" charset="UTF-16" />
     <file url="file://$PROJECT_DIR$/product.db" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/com/ascent/bean/Product.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/com/ascent/bean/User.java" charset="UTF-8" />

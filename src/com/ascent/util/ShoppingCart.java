@@ -1,52 +1,112 @@
 package com.ascent.util;
 
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import com.ascent.bean.Product;
 
 /**
- * 购物车
- * @author ascent
- * @version 1.0
+ * 购物车管理类
  */
 public class ShoppingCart {
 
-	/**
-	 * 存放购买商品信息
-	 */
-	private static ArrayList<Product> shoppingList = new ArrayList<Product>();
+    private static ShoppingCart instance = new ShoppingCart();
+    private ArrayList<Product> cartList = new ArrayList<Product>();
 
-	/**
-	 * 获取所有购买商品信息
-	 * @return shoppingList
-	 */
-	public ArrayList<Product> getShoppingList() {
-		return this.shoppingList;
-	}
+    private ShoppingCart() {}
 
-	/**
-	 * 添加商品到购物车
-	 * @param myProduct
-	 */
-	public void addProduct(Product myProduct) {
-		Product product;
-		boolean bo = false;
-		for (int i = 0; i < shoppingList.size(); i++) {
-			product = shoppingList.get(i);
-			if (myProduct.getProductname().trim().equals(product.getProductname().trim())) {
-				bo = true;
-				break;
-			}
-		}
-		if (!bo) {
-			shoppingList.add(myProduct);
-		}
-	}
+    /**
+     * 获取购物车实例
+     */
+    public static ShoppingCart getInstance() {
+        return instance;
+    }
 
-	/**
-	 * 清空购物车所购买商品
-	 */
-	public void clearProduct() {
-		shoppingList.clear();
-	}
+    /**
+     * 添加产品到购物车
+     */
+    public void addProduct(Product product) {
+        if (!cartList.contains(product)) {
+            cartList.add(product);
+            saveCart();
+        }
+    }
 
+    /**
+     * 保存购物车数据到文件
+     */
+    public void saveCart() {
+        try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("cart.txt"), StandardCharsets.UTF_8))) {
+            for (Product product : cartList) {
+                writer.write(product.toString()); // Assuming Product class has a proper toString method
+                writer.newLine();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 从文件加载购物车数据
+     */
+    public void loadCart() {
+        cartList.clear();
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream("cart.txt"), StandardCharsets.UTF_8))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                Product product = parseProduct(line);
+                if (product != null) {
+                    cartList.add(product);
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 解析产品数据
+     */
+    private Product parseProduct(String line) {
+        try {
+            // 假设产品数据格式为 "productName:cas:structure:formula:price:realstock:category"
+            String[] parts = line.split(":");
+            if (parts.length == 7) {
+                String productName = parts[0];
+                String cas = parts[1];
+                String structure = parts[2];
+                String formula = parts[3];
+                String price = parts[4];
+                String realstock = parts[5];
+                String category = parts[6];
+                return new Product(productName, cas, structure, formula, price, realstock, category);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * 从购物车移除产品
+     */
+    public void removeProduct(Product product) {
+        cartList.remove(product);
+        saveCart();
+    }
+
+    /**
+     * 获取购物车中的所有产品
+     */
+    public ArrayList<Product> getCartList() {
+        return cartList;
+    }
+
+    /**
+     * 清空购物车
+     */
+    public void clearCart() {
+        cartList.clear();
+        saveCart();
+    }
 }
